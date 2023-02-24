@@ -85,8 +85,8 @@ public class GlobalGameManager : MonoBehaviour
         if (gameInformation == null)
         {
             gameInformation = new GameInformation();
-            LoadGame();
         }
+            LoadGame();
         
         if (Instance != null)
         {
@@ -100,6 +100,8 @@ public class GlobalGameManager : MonoBehaviour
 
     public void SaveGame()
     {
+        gameInformation.scoreboard.addPlayerData(gameInformation.currentPlayerData);
+
         string jsonObject = JsonUtility.ToJson(gameInformation.scoreboard);
         File.WriteAllText(Application.persistentDataPath + "/saveFile.json", jsonObject);
     }
