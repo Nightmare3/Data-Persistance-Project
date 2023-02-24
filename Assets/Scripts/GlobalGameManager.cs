@@ -10,6 +10,11 @@ public class PlayerData
     [SerializeField] private string username;
 
     public PlayerData() { }
+    public PlayerData(string username)
+    {
+        Username = username;
+        score = 0;
+    }
     public PlayerData(string username, int score)
     {
         Username = username;
@@ -51,6 +56,15 @@ public class Scoreboard
             return topPlayer;
         }
         return null;
+    }
+
+    public bool isScoreboardEmpty()
+    {
+        if(scoreboard.Count == 0)
+        {
+            return true;
+        }
+        return false;
     }
 }
 

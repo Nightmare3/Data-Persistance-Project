@@ -9,21 +9,23 @@ using UnityEditor;
 
 public class UIManager_MainMenu : MonoBehaviour
 {
-    TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TMP_InputField usernameInput;
     // Start is called before the first frame update
     void Start()
     {
-
+        UpdateScoreboardInformation();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void StartGame()
     {
+        GlobalGameManager.Instance.gameInformation.currentPlayerData = new PlayerData(usernameInput.text);
         SceneManager.LoadScene("main");
     }
 
@@ -34,6 +36,16 @@ public class UIManager_MainMenu : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void UpdateScoreboardInformation()
+    {
+        Scoreboard scoreboard = GlobalGameManager.Instance.gameInformation.scoreboard;
+        if (!scoreboard.isScoreboardEmpty())
+        {
+            PlayerData player = scoreboard.GetTopPlayer();
+            scoreText.SetText("Best Score: " + player.Username + " : " + player.Score);
+        }
     }
 
 }
