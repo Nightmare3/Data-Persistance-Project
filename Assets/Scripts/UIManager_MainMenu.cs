@@ -38,6 +38,11 @@ public class UIManager_MainMenu : MonoBehaviour
 #endif
     }
 
+    public void ScoreboardButton()
+    {
+        SceneManager.LoadScene("GUI_Scoreboard");
+    }
+
     public void UpdateScoreboardInformation()
     {
         Scoreboard scoreboard = GlobalGameManager.Instance.gameInformation.scoreboard;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -43,12 +44,12 @@ public class Scoreboard
 
     public PlayerData GetTopPlayer()
     {
-        if(scoreboard.Count > 0)
+        if (scoreboard.Count > 0)
         {
             PlayerData topPlayer = new PlayerData("", 0);
-            foreach(PlayerData player in scoreboard)
+            foreach (PlayerData player in scoreboard)
             {
-                if(player.Score > topPlayer.Score)
+                if (player.Score > topPlayer.Score)
                 {
                     topPlayer = player;
                 }
@@ -58,9 +59,25 @@ public class Scoreboard
         return null;
     }
 
+    public List<PlayerData> GetTopPlayers(int length)
+    {
+        List<PlayerData> playerData = scoreboard.OrderBy(_player => _player.Score).ToList();
+        playerData.Reverse();
+        return playerData.Take(length).ToList();
+    }
+
+    public List<PlayerData> GetTopTenPlayers()
+    {
+        if(scoreboard.Count < 10)
+        {
+            return GetTopPlayers(scoreboard.Count);
+        }
+        return GetTopPlayers(10);
+    }
+
     public bool isScoreboardEmpty()
     {
-        if(scoreboard.Count == 0)
+        if (scoreboard.Count == 0)
         {
             return true;
         }
@@ -86,8 +103,8 @@ public class GlobalGameManager : MonoBehaviour
         {
             gameInformation = new GameInformation();
         }
-            LoadGame();
-        
+        LoadGame();
+
         if (Instance != null)
         {
             Destroy(gameObject);
