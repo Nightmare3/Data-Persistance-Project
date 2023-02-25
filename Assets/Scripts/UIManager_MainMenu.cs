@@ -25,7 +25,8 @@ public class UIManager_MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        GlobalGameManager.Instance.gameInformation.currentPlayerData = new PlayerData(usernameInput.text);
+        string username = usernameInput.text == "" ? "Anonymous" : usernameInput.text;
+        GlobalGameManager.Instance.gameInformation.currentPlayerData = new PlayerData(username);
         SceneManager.LoadScene("main");
     }
 
